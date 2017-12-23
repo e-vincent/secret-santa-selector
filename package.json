@@ -1,13 +1,14 @@
 {
   "name": "secret-santa-selector",
   "version": "0.0.0",
+  "description": "Basic web app to provide pairs of names",
+  "repository": "https://github.come-vincent/secret-santa-selector.git",
   "private": true,
   "main": "app.js",
   "scripts": {
     "start": "nodemon"
   },
   "dependencies": {
-    "angular": "^1.6.8",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
