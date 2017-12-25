@@ -1,10 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../db');
+var paired = require('./paired');
+var consts = require('./constants');
 
-const SUCCESS = 200;
-const FAILURE = 404;
-const ERROR   = 500;
+/* paired child route */
+
+router.use('/paired', paired);
 
 /* GET users listing. */
 
@@ -18,28 +20,7 @@ router.get('/', function(req, res, next) {
         return next(err);
       }
 
-      res.status(SUCCESS).send(rows);
-    }
-  );
-});
-
-// get specific person
-router.get('/:personId', function(req, res, next) {
-  console.log(req.params);
-  var id = req.params.personId;
-  db.query(
-    'SELECT * FROM `person` WHERE Id = ?', 
-    [id],
-    function(err, rows) {
-      if (err) {
-        return next(err);
-      } 
-
-      if (rows.length == 0) {
-        res.status(FAILURE).send({message: 'Could not find requested resource'});
-      } else {
-        res.status(SUCCESS).send({result: rows});
-      }  
+      res.status(consts.SUCCESS).send(rows);
     }
   );
 });
@@ -60,7 +41,7 @@ router.post('/', function(req, res, next) {
       }
 
       person.Id = entry.insertId;
-      res.status(SUCCESS).send(person);
+      res.status(consts.SUCCESS).send(person);
     }
   );
 });
@@ -78,19 +59,30 @@ router.delete('/:personId', function(req, res, next) {
         next(err);
       }
 
-      res.status(SUCCESS).send({status: 'success', affectedRows: result.affectedRows});
+      res.status(consts.SUCCESS).send({status: 'Success', affectedRows: result.affectedRows});
     }
   );
 });
 
-// get pairs
-//  - new random list on each call
-//  - will not give a person themselves
-// improvement: save recent pairing
-// - enable route /paired/:personId
-// - returns last given pairing for the given personId
-router.get('/paired', function(req, res, next) {
-  res.send('NOT YET IMPLEMENTED');
+// get specific person
+router.get('/:personId', function(req, res, next) {
+  console.log(req.params);
+  var id = req.params.personId;
+  db.query(
+    'SELECT * FROM `person` WHERE Id = ?', 
+    [id],
+    function(err, rows) {
+      if (err) {
+        return next(err);
+      } 
+
+      if (rows.length == 0) {
+        res.status(consts.NOT_FOUND).send({message: 'Could not find requested resource'});
+      } else {
+        res.status(consts.SUCCESS).send({result: rows});
+      }  
+    }
+  );
 });
 
 module.exports = router;

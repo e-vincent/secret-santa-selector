@@ -1,54 +1,82 @@
 <div class="container-fluid">
   <div class="row-fluid">
-  <div class="col-lg-6 col-md-6 col-xs-6">
-    Current People:
-
-    <table>
-      <thead> 
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">First Name</th>
-          <th scope="col">Last Name</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="person in people">
-          <th>{{person.Id}}</th>
-          <th>{{person.FirstName}}</th>
-          <th>{{person.SecondName}}</th>
-          <th><a ng-click="removePerson(person.Id)">X</a></th>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="col-lg-6 col-md-6 col-xs-6">
-    <form name="santa_form" ng-submit="createPerson()">
-
-      <div class="form-group">
-        <label>First Name:</label>
-        <input type="text" name="FirstName" ng-model="first_name" ng-required="true"/>
-      </div>
-
-      <div class="form-group">
-        <label>Second Name:</label>
-        <input type="text" name="SecondName" ng-model="second_name" ng-required="true"/>
-      </div>
-
-      <button 
-        type="submit"> Create New Person
-      </button>
-    </form>
-  </div>
+    <div class="col-lg-12 col-md-12 col-xs-12">
+      <p>Form Instructions:</p>
+      <p>Fill in the right hand form to make a new person.</p>
+      <p>The list below shows the current users in the database. People can be removed from this list using the 'X' to the right of each name.</p>
+      <p>Click 'Generate Pairs' to be shown a list of givers and who they are buying for. </p>
+      <p>Removing or Creating a person will remove this list (if currently shown on screen) as the list will need regenerating once all changes are completed.</p>
+    </div>
   </div>
 </div>
 
 <div class="container-fluid">
   <div class="row-fluid">
-  <div class="col-lg-12 col-md-12 col-xs-12">
-    <button
-      ng-click="generatePairs()"> Generate Pairings
-    </button>
+    <div class="col-lg-6 col-md-6 col-xs-6">
+      Current People:
+
+      <table>
+        <thead> 
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="person in people">
+            <th>{{person.Id}}</th>
+            <th>{{person.FirstName}}</th>
+            <th>{{person.SecondName}}</th>
+            <th><a ng-click="removePerson(person.Id)">X</a></th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-lg-6 col-md-6 col-xs-6">
+      <form name="santa_form" ng-submit="createPerson()">
+
+        <div class="form-group">
+          <label>First Name:</label>
+          <input type="text" name="FirstName" ng-model="first_name" ng-required="true"/>
+        </div>
+
+        <div class="form-group">
+          <label>Second Name:</label>
+          <input type="text" name="SecondName" ng-model="second_name" ng-required="true"/>
+        </div>
+
+        <button 
+          type="submit"> Create New Person
+        </button>
+      </form>
+    </div>
   </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="col-lg-12 col-md-12 col-xs-12">
+      <button
+        ng-click="generatePairs()"> Generate Pairings
+      </button>
+    </div>
+  </div>
+  <div class="row-fluid" ng-if="pairs">
+    <div class="col-lg-12 col-md-12 col-xs-12">
+      <table>
+        <thead>
+          <th>Giver</th>
+          <th>Receiver</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="pair in pairs">
+            <th>{{pair.giver}}</th>
+            <th>{{pair.receiver}}</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

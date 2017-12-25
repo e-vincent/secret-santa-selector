@@ -56,6 +56,24 @@ services.factory('ExpressService', ['$http', '$q', function($http, $q) {
       );
 
       return deferred.promise;
+    },
+
+    generatePairs: function() {
+      var deferred = $q.defer();
+
+      $http.get(
+        '/api/v1/person/paired',
+        {}
+      ).then(
+        function(success) {
+          return deferred.resolve(success.data);
+        },
+        function(error) {
+          return deferred.reject(error);
+        }
+      );
+
+      return deferred.promise;
     }
   }
 }]);
